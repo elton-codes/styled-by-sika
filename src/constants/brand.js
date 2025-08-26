@@ -10,4 +10,5 @@ export const BRAND = {
     serif: "Cormorant Garamond",
     sans: "Inter",
   },
+  LOGO: "/logo-sbs.jpg",
 }

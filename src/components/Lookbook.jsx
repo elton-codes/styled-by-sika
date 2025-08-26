@@ -12,7 +12,7 @@ export default function Lookbook() {
         <h2 className="mt-2 text-3xl md:text-4xl font-serif">Editorial Grid</h2>
       </header>
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {LOOKBOOK_ITEMS.slice(0, 6).map((item) => (
           <LookbookCard
             key={item.id}

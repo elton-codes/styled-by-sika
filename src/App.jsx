@@ -1,27 +1,92 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./components/Layout.jsx";
-import { BRAND } from "./constants/brand.js";
 import Hero from "./components/Hero.jsx";
-import LookbookCard from "./components/LookbookCard.jsx";
 import Lookbook from "./components/Lookbook.jsx";
+import ProductGrid from "./components/ProductGrid.jsx";
+import ProductModal from "./components/ProductModal.jsx";
+import MiniCart from "./components/MiniCart.jsx";
+import { PRODUCTS } from "./constants/products.js";
+import BrandStory from "./components/BrandStory.jsx";
+import Newsletter from "./components/Newsletter.jsx";
+import LookbookMasonry from "./components/LookbookMasonry.jsx";
+import LookbookCarousel from "./components/LookbookCarousel.jsx";
 
-function App() {
+
+export default function App() {
+  const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const [openProduct, setOpenProduct] = useState(null);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Cart handlers
+  const handleQuickAdd = (product) => setCart((prev) => [...prev, product]);
+  const handleRemoveFromCart = (id) => setCart((prev) => prev.filter((p) => p.id !== id));
+  const handleOpenCart = () => setIsCartOpen(true);
+  const handleCloseCart = () => setIsCartOpen(false);
+
+  // Wishlist handlers (badge only for now)
+  const handleWish = (product) =>
+    setWishlist((prev) => (prev.find((p) => p.id === product.id) ? prev : [...prev, product]));
+  const handleOpenWishlist = () => alert("Wishlist panel coming soon (demo).");
+
+  // Product modal
+  const handleOpen = (product) => setOpenProduct(product);
+  const handleClose = () => setOpenProduct(null);
+
+  const cartCount = cart.length;
+  const wishCount = wishlist.length;
+
   return (
-    <Layout>
-      <Hero />
-      <Lookbook />
-      {/* Keep this simple section for now as a visual spacer/check */}
-      <section className="py-16 text-center">
-        <p className="text-xs tracking-[0.25em] uppercase text-neutral-500">
-          {BRAND.TAGLINE}
-        </p>
-        <h2 className="mt-2 text-3xl md:text-4xl font-serif">Editorial Preview</h2>
-        <p className="mt-3 max-w-2xl mx-auto text-neutral-700">
-          Next we’ll add a Christie Brown–inspired lookbook grid with hover states.
-        </p>
-      </section>
-    </Layout>
+    <>
+      {/* Pass counts + handlers to Layout via Nav */}
+      <Layout
+        navProps={{
+    cartCount,
+    wishCount,
+    onCartOpen: handleOpenCart,
+    onWishOpen: handleOpenWishlist,
+  }}
+      >
+        {/* Inject Nav props by cloning Layout? Easier: give Layout nothing and update Nav to accept props */}
+        {/* We’ll pass via context in a bigger app; for demo keep it simple */}
+        {/* Replace Layout header Nav usage: <Nav ...props/> – open Layout.jsx and forward props if you want.
+            Quick approach: import Nav here and render it before others; but we’ll keep your current Layout and
+            instead slightly modify Layout to accept children only, and Nav already lives inside it.
+            So, open Layout.jsx and change <Nav /> to:
+              <Nav cartCount={cartCount} wishCount={wishCount} onCartOpen={handleOpenCart} onWishOpen={handleOpenWishlist} />
+        */}
+        <Hero />
+        {/* <Lookbook /> */}
+        {/* <LookbookMasonry /> */}
+        <LookbookCarousel />
+        <ProductGrid
+          products={PRODUCTS}
+          onQuickAdd={handleQuickAdd}
+          onWish={handleWish}
+          onOpen={handleOpen}
+        />
+
+        <ProductModal
+          open={!!openProduct}
+          product={openProduct}
+          onClose={handleClose}
+          onAdd={handleQuickAdd}
+          onWish={handleWish}
+        />
+
+        <BrandStory />
+        <Newsletter />
+      </Layout>
+
+      {/* Mini Cart lives outside main flow so it overlays everything */}
+      <MiniCart
+        open={isCartOpen}
+        items={cart}
+        currency="GHS"
+        onClose={handleCloseCart}
+        onRemove={handleRemoveFromCart}
+        onCheckout={() => alert("Demo checkout — integrate provider later.")}
+      />
+    </>
   );
 }
-
-export default App;

@@ -11,7 +11,7 @@ export default function LookbookCard({ title, desc, price, image }) {
       className="group relative w-full"
     >
       {/* Image wrapper */}
-      <div className="relative w-full h-[28rem] overflow-hidden">
+      <div className="relative w-full h-[24rem] overflow-hidden">
         <img
           src={image}
           alt={title}
