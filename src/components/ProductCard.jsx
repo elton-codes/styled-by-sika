@@ -1,54 +1,71 @@
+// src/components/ProductCard.jsx
 import React from "react";
-import { Heart, ShoppingCart, Eye } from "lucide-react";
+import { Heart, ShoppingCart } from "lucide-react";
 
 export default function ProductCard({ product, onQuickAdd, onWish, onOpen }) {
   const { title, price, currency, image } = product;
-  return(
-    <article className="group relative w-full">
+
+  const openDetails = () => onOpen?.(product);
+  const stop = (e) => e.stopPropagation();
+
+  return (
+    <article
+      className="group relative w-full cursor-pointer"
+      onClick={openDetails}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && openDetails()}
+      aria-label={`${title} — view details`}
+    >
       {/* Image */}
-      <div className="relative w-full h-[24rem] overflow-hidden">
+      <div className="relative w-full h-[24rem] overflow-hidden rounded-lg">
         <img
           src={image}
           alt={title}
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500" />
 
-        {/* Quick actions (top-right) */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button
-            onClick={() => onQuickAdd(product)}
-            className="p-2 rounded-full bg-white/90 text-primary hover:bg-white shadow-sm"
-            title="Add to cart"
-          >
-            <ShoppingCart className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => onWish(product)}
-            className="p-2 rounded-full bg-white/90 text-primary hover:bg-white shadow-sm"
-            title="Add to wishlist"
-          >
-            <Heart className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => onOpen(product)}
-            className="p-2 rounded-full bg-white/90 text-primary hover:bg-white shadow-sm"
-            title="View details"
-          >
-            <Eye className="h-4 w-4" />
-          </button>
+        {/* Bottom control bar (always visible; hover increases contrast) */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3">
+          <div className="pointer-events-auto flex items-center justify-center gap-2">
+            {/* subtle gradient under icons for readability */}
+            <div className="absolute inset-x-0 -top-12 bottom-0 bg-gradient-to-t from-black/35 via-black/15 to-transparent opacity-90 group-hover:opacity-100 transition-opacity" />
+
+            <button
+              onClick={(e) => {
+                stop(e);
+                onWish?.(product);
+              }}
+              className="relative z-10 inline-flex items-center justify-center h-8 w-8 rounded-md bg-black/80 text-primary hover:bg-black/60 shadow-sm"
+              aria-label={`Add ${title} to wishlist`}
+              title="Wishlist"
+            >
+              <Heart className="h-4 w-4 text-white" />
+            </button>
+
+            <button
+              onClick={(e) => {
+                stop(e);
+                onQuickAdd?.(product);
+              }}
+              className="relative z-10 inline-flex items-center justify-center h-8 w-8 rounded-md bg-black/80 text-primary hover:bg-black/60 shadow-sm"
+              aria-label={`Add ${title} to cart`}
+              title="Add to cart"
+            >
+              <ShoppingCart className="h-4 w-4 text-white" />
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Info below */}
-      <div className="mt-3 text-center">
+      {/* Info below image */}
+      <div className="mt-3 text-center px-1">
         <h3 className="font-serif text-lg">{title}</h3>
         <p className="mt-1 text-sm font-medium text-accent">
-          {currency} {price.toLocaleString()}
+          {currency} {Number(price).toLocaleString()}
         </p>
       </div>
     </article>
   );
-
 }

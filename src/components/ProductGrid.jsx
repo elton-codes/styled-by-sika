@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard.jsx";
 
 export default function ProductGrid({ products, onQuickAdd, onWish, onOpen }) {
   return (
-    <section className="py-16">
+    <section className="py-8">
       <header className="text-center mb-10">
         <p className="text-xs tracking-[0.25em] uppercase text-neutral-500">
           SHOP 

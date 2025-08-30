@@ -36,22 +36,24 @@ export default function Newsletter() {
         </p>
       </div>
 
-      <form onSubmit={onSubmit} className="mt-6 max-w-xl mx-auto flex gap-3 px-6">
-        <input
-          type="email"
-          placeholder="Enter your email"
-          className="flex-1 rounded-full border border-neutral-300 px-5 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/15 bg-white"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          aria-label="Email"
-        />
-        <button
-          type="submit"
-          className="rounded-full bg-primary text-white px-6 py-3 text-sm"
-        >
-          Subscribe
-        </button>
-      </form>
+      <form onSubmit={onSubmit} className="mt-6 max-w-xl mx-auto px-6">
+  <div className="flex flex-col sm:flex-row gap-3">
+    <input
+      type="email"
+      placeholder="Enter your email"
+      className="flex-1 w-full min-w-0 rounded-full border border-neutral-300 px-5 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/15 bg-white"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      aria-label="Email"
+    />
+    <button
+      type="submit"
+      className="w-full sm:w-auto rounded-full bg-primary text-white px-6 py-3 text-sm"
+    >
+      Subscribe
+    </button>
+  </div>
+</form>
 
       {status && (
         <p

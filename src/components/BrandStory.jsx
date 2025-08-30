@@ -35,16 +35,16 @@ export default function BrandStory() {
             with a modern eye, inviting you into a world of intentional elegance.
           </p>
 
-          <div className="mt-6">
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <a
               href="#lookbook"
-              className="px-6 py-3 rounded-full bg-primary text-white text-sm tracking-wide"
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-primary text-white text-sm tracking-wide text-center"
             >
               Explore Lookbook
             </a>
             <a
               href="#newsletter"
-              className="ml-3 px-6 py-3 rounded-full ring-1 ring-primary/15 text-sm tracking-wide text-primary"
+              className="w-full sm:w-auto ml-3 px-6 py-3 rounded-full ring-1 ring-primary/15 text-sm tracking-wide text-primary text-center"
             >
               Join Newsletter
             </a>

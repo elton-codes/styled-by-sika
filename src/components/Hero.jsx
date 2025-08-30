@@ -18,7 +18,7 @@ export default function Hero() {
         }}
       >
         {/* Soft vignette / overlay */}
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/50" />
 
         {/* Copy block */}
         <div className="absolute inset-0 grid place-items-center text-center px-6">
@@ -47,7 +47,7 @@ export default function Hero() {
               </a>
               <a
                 href="#story"
-                className="px-6 py-3 rounded-full ring-1 ring-white/40 text-sm tracking-wide text-white"
+                className="px-6 py-3 rounded-full ring-1 ring-white/80 ext-sm tracking-wide text-white"
               >
                 Our Story
               </a>
